@@ -1,0 +1,9 @@
+<launch>
+
+    <!-- Run the hoi simulation -->
+    <include file="$(find turtlebot_simulation)/launch/swiftpro_basic.launch"/>
+    
+    <!-- Launch the task priority node -->
+    <!-- <node pkg="arm" type="tp_algorithm.py" name="task_priority_node" output="screen" /> -->
+    
+</launch>
