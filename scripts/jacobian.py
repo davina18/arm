@@ -13,7 +13,9 @@ def compute_jacobian(q):
     L2 = 142 / 1000.0          
     L3 = 158.8 / 1000.0       
     d_grip = 56.5 / 1000.0 
+    d_base_vertical = 108 / 1000.0
     d_base_horizontal = 13.2 / 1000.0
+    h_wrist = 72.2 / 1000.0
 
     # Trigonometric values
     sin_q1 = np.sin(q1)
@@ -23,27 +25,30 @@ def compute_jacobian(q):
     sin_q3 = np.sin(q3)
     cos_q3 = np.cos(q3)
 
-    # Planar reach
+    # Compute horizontal (r) and vertical (z_E) components of planar reach
     r = d_base_horizontal - (L2 * sin_q2) + (L3 * cos_q3) + d_grip
+    z_E = -d_base_vertical - (L2 * np.cos(q2)) - (L3 * np.sin(q3)) + h_wrist
 
-    # Partial derivatives
+    # Partial derivatives of planar reach w.r.t joint angles
     dr_dq2 = -L2 * cos_q2
     dr_dq3 = -L3 * sin_q3
-    dz_dq2 = L2 * sin_q2
-    dz_dq3 = -L3 * cos_q3
+    dzE_dq2 = L2 * sin_q2
+    dzE_dq3 = -L3 * cos_q3
 
-    # Jacobian terms
+    # Jacobian terms for x-direction
     dx_dq1 = -r * sin_q1
     dx_dq2 = dr_dq2 * cos_q1
     dx_dq3 = dr_dq3 * cos_q1
 
+    # Jacobian terms for y-direction
     dy_dq1 = r * cos_q1
     dy_dq2 = dr_dq2 * sin_q1
     dy_dq3 = dr_dq3 * sin_q1
 
+    # Jacobian terms for z-direction
     dz_dq1 = 0.0
-    dz_dq2 = dz_dq2
-    dz_dq3 = dz_dq3
+    dz_dq2 = dzE_dq2
+    dz_dq3 = dzE_dq3
 
     # Build Jacobian
     J = np.array([

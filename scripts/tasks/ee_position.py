@@ -2,12 +2,10 @@ import numpy as np
 
 class EndEffectorPositionTask:
     def __init__(self, value):
-        #self.sigma_d = value.reshape(3, 1)  # desired EE position
-        value[2] = -value[2]  # Flip Z to match ROS robot frame
+        value[2] = -value[2]  # flip z for ned frame
         self.sigma_d = value.reshape(3, 1)
         self.err = np.zeros((3, 1))
         self.J = np.zeros((3, 4))
-        self.error = []
 
     def update(self, robot):
         # Get current EE position
@@ -15,7 +13,6 @@ class EndEffectorPositionTask:
 
         # Compute error
         self.err = self.sigma_d - sigma
-        self.error.append(np.linalg.norm(self.err))
 
         # Linear part of the Jacobian
         self.J = robot.get_jacobian()[0:3, :]

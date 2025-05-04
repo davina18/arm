@@ -19,7 +19,7 @@ def compute_forward_kinematics(q):
     d_base_horizontal = 13.2 / 1000.0
     h_wrist = 72.2 / 1000.0
 
-    # Planar reach
+    # Compute horizontal (r) and vertical (z_E) components of planar reach
     r = d_base_horizontal - (L2 * np.sin(q2)) + (L3 * np.cos(q3)) + d_grip
     z_E = -d_base_vertical - (L2 * np.cos(q2)) - (L3 * np.sin(q3)) + h_wrist
 

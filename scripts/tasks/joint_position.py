@@ -6,7 +6,6 @@ class JointPositionTask:
         self.sigma_d = value  # desired joint value
         self.err = np.zeros((1, 1))
         self.J = np.zeros((1, 4))  
-        self.error = []
 
     def update(self, robot):
         # Get current joint position
@@ -14,7 +13,6 @@ class JointPositionTask:
 
         # Compute error
         self.err = self.sigma_d - sigma
-        self.error.append(np.abs(self.err))
 
         # Extract joint from the Jacobian 
         self.J[0, self.joint_idx] = 1

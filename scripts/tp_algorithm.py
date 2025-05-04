@@ -33,7 +33,7 @@ class TaskPriorityController:
         self.marker_pub = rospy.Publisher("/desired_ee_pos_marker", Marker, queue_size=1)
 
     def initialise_tasks(self):
-        self.tasks.append(EndEffectorPositionTask(value=np.array([-0.2, -0.1, 0.0855])))
+        self.tasks.append(EndEffectorPositionTask(value=np.array([0.2, 0.1, 0.0855])))
 
     def joint_state_callback(self, msg):
         print("Joint state positions from simulator:", msg.position)
